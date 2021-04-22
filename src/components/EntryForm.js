@@ -1,17 +1,19 @@
 import React, { useContext, useState, useEffect } from "react"
 import { EntryContext } from "./EntryProvider"
 import { MoodContext } from "./mood/MoodProvider"
-
+import { InstructorContext } from './instructor/InstructorProvider'
 
 export const EntryForm = (props) => {
     const { addEntry, updateEntry, entry, setEntry } = useContext(EntryContext)
     const { moods, getMoods } = useContext(MoodContext)
-
+    const { instructors, getInstructors } = useContext(InstructorContext)
     const [editMode, editModeChanged] = useState(false)
 
     useEffect(() => {
         getMoods()
+        .then(getInstructors)
     }, [])
+
 
     useEffect(() => {
         if ('id' in entry) {
@@ -42,6 +44,7 @@ export const EntryForm = (props) => {
                 concept: entry.concept,
                 entry: entry.entry,
                 date: entry.date,
+                instructor_id: parseInt(entry.instructor_id),
                 mood_id: parseInt(entry.mood_id)
             })
         } else {
@@ -49,10 +52,11 @@ export const EntryForm = (props) => {
                 concept: entry.concept,
                 entry: entry.entry,
                 date: Date.now(),
+                instructor_id: parseInt(entry.instructor_id),
                 mood_id: parseInt(entry.mood_id)
             })
         }
-        setEntry({ concept: "", entry: "", mood_id: 0 })
+        setEntry({ concept: "", entry: "", date: "", mood_id: 0, instructor_id: 0 })
     }
 
     return (
@@ -82,8 +86,8 @@ export const EntryForm = (props) => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="moodId">Mood: </label>
-                    <select name="moodId" className="form-control"
+                    <label htmlFor="mood_id">Mood: </label>
+                    <select name="mood_id" className="form-control"
                         proptype="int"
                         value={entry.mood_id}
                         onChange={handleControlledInputChange}>
@@ -92,6 +96,23 @@ export const EntryForm = (props) => {
                         {moods.map(m => (
                             <option key={m.id} value={m.id}>
                                 {m.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="instructor_id">Instructor: </label>
+                    <select name="instructor_id" className="form-control"
+                        proptype="int"
+                        value={entry.instructor_id}
+                        onChange={handleControlledInputChange}>
+
+                        <option value="0">Select an instructor</option>
+                        {instructors.map(e => (
+                            <option key={e.id} value={e.id}>
+                                {e.first_name}
                             </option>
                         ))}
                     </select>

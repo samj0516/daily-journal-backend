@@ -13,7 +13,7 @@ export const Entry = ({ entry, moods }) => {
       <div className="entry__entry">{entry.entry}</div>
       <div className="entry__date">{entry.date}</div>
       <div className="entry__mood">{entry.mood.label}</div>
-
+      <div className="entry__instructor">{entry.instructor.first_name}</div>
       <button onClick={
         () => {
           deleteEntry(entry)
