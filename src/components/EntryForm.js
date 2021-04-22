@@ -42,17 +42,17 @@ export const EntryForm = (props) => {
                 concept: entry.concept,
                 entry: entry.entry,
                 date: entry.date,
-                moodId: parseInt(entry.moodId)
+                mood_id: parseInt(entry.mood_id)
             })
         } else {
             addEntry({
                 concept: entry.concept,
                 entry: entry.entry,
                 date: Date.now(),
-                moodId: parseInt(entry.moodId)
+                mood_id: parseInt(entry.mood_id)
             })
         }
-        setEntry({ concept: "", entry: "", moodId: 0 })
+        setEntry({ concept: "", entry: "", mood_id: 0 })
     }
 
     return (
@@ -85,7 +85,7 @@ export const EntryForm = (props) => {
                     <label htmlFor="moodId">Mood: </label>
                     <select name="moodId" className="form-control"
                         proptype="int"
-                        value={entry.moodId}
+                        value={entry.mood_id}
                         onChange={handleControlledInputChange}>
 
                         <option value="0">Select a mood</option>
